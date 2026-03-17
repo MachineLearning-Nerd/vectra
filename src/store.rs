@@ -99,7 +99,6 @@ impl VectorStore {
         if k == 0 {
             return Err(VectraError::InvalidK);
         }
-
         // TODO: Implement brute-force KNN search
         //
         // Steps:
@@ -121,7 +120,18 @@ impl VectorStore {
         // For 100K vectors, this will be noticeably slow — that's the point!
         // Phase 3's HNSW index will make this 50-100x faster.
 
-        todo!("Implement brute-force KNN search")
+        let mut results : Vec<SearchResult> = self.vectors.iter().map(|vector| {
+            let distance_value = compute_distance(query, &vector.data, self.metric).unwrap();
+            SearchResult {
+                id: vector.id,
+                distance: distance_value,
+            }
+        }).collect();
+
+        results.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap());
+        results.truncate(k);
+
+        Ok(results)
     }
 }
 

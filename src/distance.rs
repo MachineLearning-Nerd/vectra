@@ -70,7 +70,7 @@ pub fn dot_product(a: &[f32], b: &[f32]) -> Result<f32, VectraError> {
     //
     // Try to do it in one iterator chain!
 
-    todo!("Implement dot_product")
+    Ok(a.iter().zip(b.iter()).map(|(x, y)| x * y).sum())
 }
 
 /// Compute the cosine similarity between two vectors, returned as a distance.
@@ -107,7 +107,14 @@ pub fn cosine_distance(a: &[f32], b: &[f32]) -> Result<f32, VectraError> {
     //
     // Useful: f32 has .sqrt() method, and you can use iter().map(|x| x * x).sum::<f32>()
 
-    todo!("Implement cosine_distance")
+    let numurator: f32 = dot_product(a, b)?;
+    let denominator_a: f32 = a.iter().map(|x| x * x).sum();
+    let denominator_b: f32= b.iter().map(|x| x * x).sum();
+
+    if denominator_a == 0.0 || denominator_b == 0.0 {
+        return Err(VectraError::ZeroVector);
+    }
+    Ok(1.0 - (numurator /(denominator_a.sqrt() * denominator_b.sqrt())))
 }
 
 /// Compute the Euclidean distance between two vectors.
@@ -138,7 +145,7 @@ pub fn euclidean_distance(a: &[f32], b: &[f32]) -> Result<f32, VectraError> {
     // This can be done in one iterator chain:
     //   .iter().zip().map(difference and square).sum() then .sqrt()
 
-    todo!("Implement euclidean_distance")
+    Ok(a.iter().zip(b.iter()).map(|(x, y)| (x - y) * (x - y)).sum::<f32>().sqrt())
 }
 
 /// Convenience function: compute distance using the specified metric.

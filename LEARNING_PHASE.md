@@ -11,7 +11,7 @@ A from-scratch vector database built for deep learning of ANN algorithms, system
 ---
 
 ## Phase 1: Foundations — "The Dumb Version"
-**Status**: Not Started
+**Status**: Complete
 **Goal**: In-memory vector store with brute-force search
 
 ### What Claude Sets Up
@@ -20,9 +20,9 @@ A from-scratch vector database built for deep learning of ANN algorithms, system
 - Test cases and benchmark harness
 
 ### What User Implements
-- [ ] Distance functions: cosine similarity, euclidean distance, dot product
-- [ ] Brute-force KNN search (iterate all vectors, return top-K)
-- [ ] Basic insert logic
+- [x] Distance functions: cosine similarity, euclidean distance, dot product
+- [x] Brute-force KNN search (iterate all vectors, return top-K)
+- [x] Basic insert logic
 
 ### Key Concepts to Learn
 - What are embeddings and why vectors represent meaning
@@ -37,9 +37,16 @@ A from-scratch vector database built for deep learning of ANN algorithms, system
 - Unit tests with `#[test]`
 
 ### Exit Criteria
-- [ ] All three distance functions pass unit tests
-- [ ] KNN search returns correct results on small test set
-- [ ] Benchmark: measure queries/sec on 10K random vectors (128d)
+- [x] All three distance functions pass unit tests (14/14 pass)
+- [x] KNN search returns correct results on small test set (5/5 pass)
+- [x] Benchmark: measure queries/sec on 10K random vectors (128d)
+
+### Benchmark Results (128d, cosine, K=10)
+| Vectors | Time/query | Queries/sec |
+|---------|-----------|-------------|
+| 1,000 | 0.17 ms | ~5,900 |
+| 10,000 | 1.73 ms | ~578 |
+| 100,000 | 17.9 ms | ~56 |
 
 ---
 
@@ -220,7 +227,7 @@ A from-scratch vector database built for deep learning of ANN algorithms, system
 
 | Phase | Status | Started | Completed |
 |-------|--------|---------|-----------|
-| 1. Foundations | Not Started | - | - |
+| 1. Foundations | Complete | 2026-03-17 | 2026-03-17 |
 | 2. Persistence | Not Started | - | - |
 | 3. Indexing (HNSW) | Not Started | - | - |
 | 4. Quantization | Not Started | - | - |
